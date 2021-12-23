@@ -1,0 +1,354 @@
+*,
+*::before,
+*::after {
+   box-sizing: border-box;
+   margin: 0;
+   padding: 0;
+}
+
+
+
+/* Custom properties */
+
+:root {
+   --clr-dark: #E5E7EB;
+   --clr-medium: #F3F4F6;
+   --clr-white: #ffffff;
+   --clr-blue: #2563EB;
+   --clr-red: #DC2626;
+   --clr-gray: #4B5563;
+
+   /* font sizes */
+   --fs-500: 1.75rem;
+   --fs-400: 1.125rem;
+   --fs-300: 1rem;
+   --fs-200: 0.875rem;
+
+   /* font families */
+   --ff-serif: "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif"
+
+}
+
+body {
+   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+   line-height: 1.5;
+   background-color: var(--clr-medium);
+   font-size: var(--fs-400);
+   color: var(--clr-white);
+   min-height: 100vh;
+}
+
+input,
+button,
+textarea,
+select {
+   font: inherit;
+}
+
+/* ------------------- */
+/* Utility classes */
+/* ------------------- */
+
+.flex {
+   display: flex;
+}
+
+.flex-col {
+   flex-direction: column;
+}
+
+
+/* typgraphy */
+
+.ff-serif {
+   font-family: var(--ff-serif);
+}
+
+.letter-spacing-1 {
+   letter-spacing: 4.75px;
+}
+
+.letter-spacing-2 {
+   letter-spacing: 2.7px;
+}
+
+.letter-spacing-3 {
+   letter-spacing: 2.35px;
+}
+
+
+.fs-500 { font-size: var(--fs-500); }
+.fs-400 { font-size: var(--fs-400); }
+.fs-300 { font-size: var(--fs-300); }
+.fs-200 { font-size: var(--fs-200); }
+
+.fw-500 {
+   font-weight: 500;
+}
+
+
+
+
+
+
+
+
+
+
+
+.header {
+   background-color: var(--clr-gray);
+   color: #fff;
+}
+
+.header>nav {
+   display: flex;
+   justify-content: space-between;
+   padding: 1em 5em;
+}
+
+.container {
+   max-width: 1440px;
+   width: 90%;
+   margin: 0 auto;
+   display: flex;
+   justify-content: center;
+   align-items: center;
+}
+
+.list-style-none {
+   list-style-type: none;
+}
+
+
+/* ------------------- */
+/* Components */
+/* ------------------- */
+
+.jumbotron {
+   margin-top: 5em;
+   display: flex;
+   flex-direction: column;
+   justify-content: center;
+   align-items: center;
+   gap: 2em;
+   background-color: var(--clr-dark);
+   width: 90%;
+   padding: 5em 1em;
+   border-radius: 0.5em;
+   box-shadow: 0px 5px 30px rgb(0 0 0 / 15%);
+}
+
+.add {
+   padding: 0.5em 1em;
+   outline: none;
+   letter-spacing: 0.1em;
+   margin-bottom: -1em;
+   /* font-size: 15px; */
+   border: 1px solid var(--clr-gray);
+   color: var(--clr-gray);
+   cursor: pointer;
+}
+
+.add:hover {
+   background-color: var(--clr-gray);
+   color: white;
+   transition: 100ms ease-in;
+}
+
+
+.rupee-sign,
+.at-sign {
+   padding: 0 1em;
+   color: black;
+   border: 1px solid #D1D5DB;
+}
+
+
+
+
+.amount-section {
+   width: 100%;
+   display: flex;
+   justify-content: center;
+}
+
+.amount-section>input {
+   outline: none;
+   padding: 0.5em 1em;
+   /* font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+   font-size: large; */
+   width: 80%;
+   border: 1px solid #D1D5DB;
+}
+
+.description-section {
+   display: flex;
+   width: 100%;
+   justify-content: center;
+}
+
+.description-section>input {
+   outline: none;
+   /* font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+   font-size: large; */
+   padding: 0.5em 1em;
+   width: 80%;
+   border: 1px solid #D1D5DB;
+}
+
+
+.error{
+   color: var(--clr-red);
+   font-weight: 500;
+   text-align: center;
+}
+
+.expense-section {
+   margin-top: 2em;
+   color: black;
+   width: 90%;
+   padding: 1em 1.3em;
+   background-color: var(--clr-white);
+   /* align-items: center; */
+   border: 1px solid var(--clr-dark);
+   margin-bottom: 2em;
+}
+
+.expense-list-item {
+   justify-content: space-between;
+   align-items: center;
+   /* margin-top: 1.5em; */
+}
+
+.expenses>li:where(:not(:first-child)){
+   margin-top: 1.5em;
+}
+
+.expense-list-item-amount{
+   display: flex;
+   gap: 2em;
+   align-items: center;
+}
+
+.delete-btn {
+   padding: 0.25em 0.75em;
+   color: var(--clr-red);
+   cursor: pointer;
+   border: 1px solid var(--clr-red);
+   background-color: var(--clr-white);
+}
+
+.edit-btn {
+   padding: 0.25em 0.75em;
+   color: var(--clr-gray);
+   cursor: pointer;
+   border: 1px solid var(--clr-gray);
+   background-color: var(--clr-white);
+}
+
+.edit-btn:hover {
+   background-color: var(--clr-gray);
+   color: var(--clr-white);
+   transition: 150ms ease-in;
+}
+
+.delete-btn:hover {
+   background-color: var(--clr-red);
+   color: var(--clr-white);
+   transition: 150ms ease-in;
+}
+
+ /* Add Animation */
+ @-webkit-keyframes animatetop {
+   from {top:-300px; opacity:0} 
+   to {top:0; opacity:1}
+ }
+ 
+ @keyframes animatetop {
+   from {top:-300px; opacity:0}
+   to {top:0; opacity:1}
+ }
+ 
+ /* The Close Button */
+ .close {
+   color: var(--clr-gray);
+   float: right;
+   margin-right: 10px;
+   padding: -0.2em -0.02em;
+   font-size: 28px;
+   font-weight: bold;
+   cursor: pointer;
+ }
+ 
+ .close:hover,
+ .close:focus {
+   transform: scale(1.2);
+   transition: 200ms ease;
+ }
+
+.modal {
+   display: block;
+   position: fixed; /* Stay in place */
+   z-index: 1; /* Sit on top */
+   padding-top: 100px; /* Location of the box */
+   left: 0;
+   top: 0;
+   width: 100%; /* Full width */
+   height: 100%; /* Full height */
+   overflow: auto; /* Enable scroll if needed */
+   background-color: rgb(0,0,0); /* Fallback color */
+   background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+ }
+ 
+ /* Modal Content */
+ .modal-content {
+   position: relative;
+   background-color: #fefefe;
+   color: var(--clr-gray);
+   margin: auto;
+   padding: 1em;
+   border: 1px solid #888;
+   width: 50%;
+   box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
+   -webkit-animation-name: animatetop;
+   -webkit-animation-duration: 0.4s;
+   animation-name: animatetop;
+   animation-duration: 0.4s
+ }
+
+ 
+.modal-body {
+   display: flex;
+   flex-direction: column;
+   justify-content: center;
+   align-items: center;
+   margin: 2em 0;
+   gap: 0.5em;
+}
+
+.modal-body > input {
+   width: 70%;
+}
+.modal-body > label {
+   text-align: justify;
+}
+.modal-footer {
+   display: flex;
+   justify-content: center;
+}
+
+@media(max-width: 450px) {
+
+   .header > nav {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1.5em;
+   }
+
+   .expense-list-item-amount {
+      display: flex;
+      gap: 1em;
+   }
+}

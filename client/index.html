@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+   <head>
+      <meta charset="UTF-8" />
+      <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <link rel="stylesheet" href="/client/style.css" />
+      <script
+         defer
+         src="https://kit.fontawesome.com/a9c2dd5e24.js"
+         crossorigin="anonymous"
+      ></script>
+      <script defer src="/client/main.js"></script>
+      <title>Xpers</title>
+   </head>
+
+   <body>
+      <header class="header">
+         <nav>
+            <h2>Xpers</h2>
+            <h2 id="heading-element"></h2>
+         </nav>
+      </header>
+      <section class="container flex flex-col">
+         <form id="form" class="jumbotron expense-form">
+            <div class="amount-section">
+               <button id="rupee" class="rupee-sign">
+                  <i class="fas fa-rupee-sign fa-lg"></i>
+               </button>
+               <input
+                  placeholder="Amount spent"
+                  required
+                  type="text"
+                  id="expense-amount"
+               />
+            </div>
+            <div class="description-section">
+               <button class="at-sign"><i class="fas fa-at"></i></button>
+               <input
+                  placeholder="Spent on"
+                  required
+                  type="text"
+                  id="expense-description"
+               />
+            </div>
+            <button type="submit" id="add-expense-btn" class="add">Add</button>
+            <!-- <div id = "error-placeholder">
+         
+         </div> -->
+         </form>
+         <div class="expense-section">
+            <ul class="expenses" id="expense-list"></ul>
+         </div>
+      </section>
+   </body>
+</html>
