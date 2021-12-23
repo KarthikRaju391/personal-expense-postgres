@@ -6,6 +6,13 @@ const addExpenseBtn = document.getElementById('add-expense-btn');
 const expenseList = document.getElementById('expense-list');
 const errorPlaceholder = document.getElementById('error-placeholder');
 const updateExpense = document.getElementById('update-expense-btn');
+
+const sortAmtAsc = document.getElementById('sort-amount-asc');
+const sortAmtDesc = document.getElementById('sort-amount-dsc');
+const sortDate = document.getElementById('sort-date-oldest');
+const sortDateNew = document.getElementById('sort-date-newest');
+
+
 let totalExpense;
 
 let allExpenses = [];
@@ -199,4 +206,44 @@ async function deleteExpense(expenseSno) {
    //    totalExpense === 0 ? `Total amount : 0` : `Total : ${totalExpense}`
 }
 
+async function sortOldestDate() {
+   const res = await fetch('http://localhost:5000/expenses/oldest-date');
+   const data = await res.json();
+   if (data.length != 0) {
+      expenseList.parentElement.classList.add('expense-section');
+   }
+   renderExpenses(data);
+}
+
+async function sortAscAmt(){
+   const res = await fetch('http://localhost:5000/expenses/amount-asc');
+   const data = await res.json();
+   if (data.length != 0) {
+      expenseList.parentElement.classList.add('expense-section');
+   }
+   renderExpenses(data);
+}
+
+async function sortDscAmt() {
+   const res = await fetch('http://localhost:5000/expenses/amount-dsc');
+   const data = await res.json();
+   if (data.length != 0) {
+      expenseList.parentElement.classList.add('expense-section');
+   }
+   renderExpenses(data);
+}
+
+async function sortNewDate() {
+   const res = await fetch('http://localhost:5000/expenses');
+   const data = await res.json();
+   if (data.length != 0) {
+      expenseList.parentElement.classList.add('expense-section');
+   }
+   renderExpenses(data);
+}
+
+sortDateNew.addEventListener('click', sortNewDate)
+sortDate.addEventListener('click', sortOldestDate)
+sortAmtAsc.addEventListener('click',sortAscAmt)
+sortAmtDesc.addEventListener('click', sortDscAmt)
 form.addEventListener('submit', addExpenses);

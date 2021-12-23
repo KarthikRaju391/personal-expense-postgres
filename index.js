@@ -13,6 +13,45 @@ app.use(express.json()); // allows us to access the req.body
 app.get('/expenses', async (req, res) => {
    try {
       const allExpenses = await pool.query(
+         'SELECT * FROM expense ORDER BY expense_id DESC'
+      );
+
+      res.json(allExpenses.rows);
+   } catch (err) {
+      console.error(err.message);
+   }
+});
+
+// get expenses sorted in asc order of expenses
+app.get('/expenses/amount-asc', async (req, res) => {
+   try {
+      const allExpenses = await pool.query(
+         'SELECT * FROM expense ORDER BY expense_amount'
+      );
+
+      res.json(allExpenses.rows);
+   } catch (err) {
+      console.error(err.message);
+   }
+});
+
+// get expenses sorted in desc order of expenses
+app.get('/expenses/amount-dsc', async (req, res) => {
+   try {
+      const allExpenses = await pool.query(
+         'SELECT * FROM expense ORDER BY expense_amount DESC'
+      );
+
+      res.json(allExpenses.rows);
+   } catch (err) {
+      console.error(err.message);
+   }
+});
+
+// get expenses sorted by added date of expenses
+app.get('/expenses/oldest-date', async (req, res) => {
+   try {
+      const allExpenses = await pool.query(
          'SELECT * FROM expense ORDER BY expense_id ASC'
       );
 
@@ -21,6 +60,7 @@ app.get('/expenses', async (req, res) => {
       console.error(err.message);
    }
 });
+
 
 // get an expense
 

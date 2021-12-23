@@ -205,7 +205,7 @@ select {
 }
 
 .expense-section {
-   margin-top: 2em;
+   margin-top: 0.5em;
    color: black;
    width: 90%;
    padding: 1em 1.3em;
@@ -247,6 +247,13 @@ select {
    background-color: var(--clr-white);
 }
 
+.filter-btn {
+   padding: 0.25em 0.75em;
+   color: var(--clr-gray);
+   cursor: pointer;
+   border: 1px solid var(--clr-gray);
+   background-color: var(--clr-white);
+}
 .edit-btn:hover {
    background-color: var(--clr-gray);
    color: var(--clr-white);
@@ -336,6 +343,56 @@ select {
 .modal-footer {
    display: flex;
    justify-content: center;
+}
+
+.filter-section {
+   margin-top: 2em;
+   display: flex;
+   justify-content: flex-end;
+}
+
+.dropdown {
+   position: relative;
+   display: inline-block;
+}
+
+.dropdown-content {
+   display: none;
+   position: absolute;
+   background-color: var(--clr-medium);
+   min-width: 160px;
+   box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+   z-index: 1;
+   right: 0;
+   top: 38px;
+}
+
+.dropdown-content a {
+   color: var(--clr-gray);
+   padding: 12px 6px;
+   text-decoration: none;
+   display: flex;
+   justify-content: space-between;
+   align-items: center;
+   cursor: pointer;
+}
+
+.dropdown-content a:hover {
+   background-color: var(--clr-gray);
+   color: var(--clr-medium);
+}
+
+.dropdown:hover .dropdown-content {
+  display: flex;
+  flex-direction: column;
+}
+
+.dropdown:hover .dropbtn {
+  background-color: var(--clr-dark);
+}
+
+.dropdown-container {
+   justify-content: flex-end;
 }
 
 @media(max-width: 450px) {

@@ -48,6 +48,19 @@
          
          </div> -->
          </form>
+         <div class="container flex dropdown-container">
+            <div class="dropdown filter-section">
+               <button class="dropbtn filter-btn" style="float: right;">
+                  <i class="fas fa-sliders-h"></i>
+               </button>
+               <div class="dropdown-content">
+                  <a id="sort-amount-asc"><i class="fas fa-sort-amount-down-alt"></i><small>Cheapest first</small></a>
+                  <a id="sort-amount-dsc"><i class="fas fa-sort-amount-up-alt"></i><small>Expensive first</small></a>
+                  <a id="sort-date-oldest"><i class="fas fa-sort-numeric-down-alt"></i><small>Oldest first</small></a>
+                  <a id="sort-date-newest"><i class="fas fa-sort-numeric-up-alt"></i><small>Latest first</small></a>
+               </div>
+            </div>
+         </div>
          <div class="expense-section">
             <ul class="expenses" id="expense-list"></ul>
          </div>
