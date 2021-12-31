@@ -16,6 +16,7 @@
    --clr-white: #ffffff;
    --clr-blue: #2563EB;
    --clr-red: #DC2626;
+   --clr-green: #8DD070;
    --clr-gray: #4B5563;
 
    /* font sizes */
@@ -35,6 +36,11 @@ body {
    font-size: var(--fs-400);
    color: var(--clr-white);
    min-height: 100vh;
+}
+
+img {
+   width: 100%;
+   height: 15em;
 }
 
 input,
@@ -115,6 +121,20 @@ select {
    align-items: center;
 }
 
+.image-container {
+   width: 60%;
+}
+
+.show-expense-container {
+   max-width: 1440px;
+   width: 90%;
+   margin-top: 4em;
+   /* margin: 0 auto; */
+   display: flex;
+   justify-content: space-around;
+   align-items: center;
+}
+
 .list-style-none {
    list-style-type: none;
 }
@@ -138,8 +158,31 @@ select {
    box-shadow: 0px 5px 30px rgb(0 0 0 / 15%);
 }
 .show-expense-jumbotron {
-   width: 50%;
-   min-height: 20em;
+   display: flex;
+   flex-direction: column;
+   justify-content: center;
+   color: var(--clr-gray);
+   background-color: var(--clr-medium);
+   width: 40%;
+   padding: 2.5em 2.5em;
+   border-radius: 0.5em;
+   box-shadow: 0px 5px 30px rgb(0 0 0 / 15%);
+}
+
+.total-amount{
+   display: flex;
+   align-items: center;
+   gap: 8em;
+}
+
+.total-amount-value {
+   color: var(--clr-gray);
+   margin-top: -0.3em;
+   margin-bottom: 0.3em;
+   letter-spacing: 2px;
+   font-weight: 500;
+   font-size: 2.5em;
+   text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
 }
 
 #heading-el {
@@ -156,6 +199,53 @@ select {
    font-weight: 600;
    text-shadow: 0 2px 3px rgba(0, 0, 0, 0.3);
 }
+
+.graph-container {
+   margin-top: 3em;
+}
+
+.categories-btn {
+   padding: 0.5em 1em;
+   outline: none;
+   letter-spacing: 0.05em;
+   font-weight: 400;
+   margin-bottom: -1em;
+   border: none;
+   background-color: var(--clr-medium);
+   border-bottom: 2px solid var(--clr-gray);
+   color: var(--clr-gray);
+   cursor: pointer;
+}
+
+.highest-lowest {
+   display: flex;
+   flex-direction: column;
+   gap: 0.5em;
+   /* margin-bottom: 1em; */
+}
+
+.view-details-btn {
+   margin-top: 1em;
+   margin-bottom: -0.5em;
+   padding: 0.5em 0.75em;
+   color: var(--clr-white);
+   text-shadow: 0 2px 3px rgba(0, 0, 0, 0.3);
+   cursor: pointer;
+   border: none;
+   border-radius: 0.5em;
+   background-color: var(--clr-gray);
+}
+
+
+.graph {
+   margin-top: 1em;
+}
+
+.graph-chart {
+   height: 25em;
+   margin-bottom: 6em;
+}
+
 
 .your-expense-link {
    text-decoration: none;
@@ -205,7 +295,11 @@ select {
    border: 1px solid #D1D5DB;
 }
 
-
+.graph-categories {
+   display: flex;
+   width: 60%;
+   justify-content: space-between;
+}
 
 
 .amount-section {
@@ -435,6 +529,8 @@ select {
 .dropdown-container {
    justify-content: flex-end;
 }
+
+
 
 @media(max-width: 450px) {
 

@@ -22,6 +22,19 @@ app.get('/expenses', async (req, res) => {
    }
 });
 
+// get SUM of expenses
+app.get('/expenses/sum', async (req, res) => {
+   try {
+      const expenseSUM = await pool.query(
+         'SELECT SUM(expense_amount) FROM expense'
+      )
+      console.log(expenseSUM.rows[0])
+      res.json(expenseSUM.rows[0])
+   } catch (err) {
+      console.error(err.message)
+   }
+})
+
 // get expenses sorted in asc order of expenses
 app.get('/expenses/amount-asc', async (req, res) => {
    try {

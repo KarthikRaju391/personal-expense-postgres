@@ -21,6 +21,7 @@ let allExpenses = [];
 expenseList.parentElement.classList.remove('expense-section');
 async function addExpenses(e) {
    e.preventDefault();
+   expenseList.scrollIntoView({behavior: "smooth", block: 'center'})
    let expenseVal = expenseDesc.value;
    let expenseAmountVal = Number(expenseAmount.value);
    let newExpenseDate = new Date().toISOString();
