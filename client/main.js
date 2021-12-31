@@ -1,4 +1,3 @@
-const headingEl = document.getElementById('heading-element');
 const expenseAmount = document.getElementById('expense-amount');
 const form = document.getElementById('form');
 const expenseDesc = document.getElementById('expense-description');
@@ -6,7 +5,6 @@ const addExpenseBtn = document.getElementById('add-expense-btn');
 const expenseList = document.getElementById('expense-list');
 const errorPlaceholder = document.getElementById('error-placeholder');
 const updateExpense = document.getElementById('update-expense-btn');
-
 const sortAmtAsc = document.getElementById('sort-amount-asc');
 const sortAmtDesc = document.getElementById('sort-amount-dsc');
 const sortDate = document.getElementById('sort-date-oldest');
@@ -16,6 +14,9 @@ const sortDateNew = document.getElementById('sort-date-newest');
 let totalExpense;
 
 let allExpenses = [];
+
+
+
 
 expenseList.parentElement.classList.remove('expense-section');
 async function addExpenses(e) {
