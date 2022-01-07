@@ -18,46 +18,73 @@
       <header class="header">
          <nav class="nav-container">
             <h2 id="heading-el">Xpers</h2>
-            <a id="next-link" class="your-expense-link" href="./chart.html">Total Expenses <i id="next-icon" class="fas fa-arrow-right"></i></a>
+            <a id="next-link" class="your-expense-link" href="./chart.html"
+               >Total Expenses <i id="next-icon" class="fas fa-arrow-right"></i
+            ></a>
          </nav>
       </header>
-      <section class="container flex flex-col">
-         <form id="form" class="jumbotron expense-form">
-            <div class="amount-section">
-               <button id="rupee" class="rupee-sign">
-                  <i class="fas fa-rupee-sign fa-lg"></i>
+      <section class="container">
+         <div class="input-flex">
+            <div class="payment-image-container">
+               <img
+                  class="payment-image"
+                  src="./images/undraw_payments_re_77x0.svg"
+                  alt=""
+               />
+            </div>
+            <form id="form" class="jumbotron expense-form">
+               <div class="amount-section">
+                  <button id="rupee" class="rupee-sign">
+                     <i class="fas fa-rupee-sign fa-lg"></i>
+                  </button>
+                  <input
+                     placeholder="Amount spent"
+                     required
+                     type="text"
+                     id="expense-amount"
+                  />
+               </div>
+               <div class="description-section">
+                  <button class="at-sign"><i class="fas fa-at"></i></button>
+                  <input
+                     placeholder="Spent on"
+                     required
+                     type="text"
+                     id="expense-description"
+                  />
+               </div>
+               <button type="submit" id="add-expense-btn" class="add">
+                  Add
                </button>
-               <input
-                  placeholder="Amount spent"
-                  required
-                  type="text"
-                  id="expense-amount"
-               />
-            </div>
-            <div class="description-section">
-               <button class="at-sign"><i class="fas fa-at"></i></button>
-               <input
-                  placeholder="Spent on"
-                  required
-                  type="text"
-                  id="expense-description"
-               />
-            </div>
-            <button type="submit" id="add-expense-btn" class="add">Add</button>
-            <!-- <div id = "error-placeholder">
+               <!-- <div id = "error-placeholder">
          
-         </div> -->
-         </form>
+            </div> -->
+            </form>
+         </div>
+      </section>
+      <section class="container flex flex-col">
          <div class="container flex dropdown-container">
             <div class="dropdown filter-section">
-               <button class="dropbtn filter-btn" style="float: right;">
+               <button class="dropbtn filter-btn" style="float: right">
                   <i class="fas fa-sliders-h"></i>
                </button>
                <div class="dropdown-content">
-                  <a id="sort-amount-asc"><i class="fas fa-sort-amount-down-alt"></i><small>Cheapest first</small></a>
-                  <a id="sort-amount-dsc"><i class="fas fa-sort-amount-up-alt"></i><small>Expensive first</small></a>
-                  <a id="sort-date-oldest"><i class="fas fa-sort-numeric-down-alt"></i><small>Oldest first</small></a>
-                  <a id="sort-date-newest"><i class="fas fa-sort-numeric-up-alt"></i><small>Latest first</small></a>
+                  <a id="sort-amount-asc"
+                     ><i class="fas fa-sort-amount-down-alt"></i
+                     ><small>Cheapest first</small></a
+                  >
+                  <a id="sort-amount-dsc"
+                     ><i class="fas fa-sort-amount-up-alt"></i
+                     ><small>Expensive first</small></a
+                  >
+                  <a id="sort-date-oldest"
+                     ><i class="fas fa-sort-numeric-down-alt"></i
+                     ><small>Oldest first</small></a
+                  >
+                  <a id="sort-date-newest"
+                     ><i class="fas fa-sort-numeric-up-alt"></i
+                     ><small>Latest first</small></a
+                  >
                </div>
             </div>
          </div>

@@ -8,9 +8,9 @@
          src="https://kit.fontawesome.com/a9c2dd5e24.js"
          crossorigin="anonymous"
       ></script>
+      <script src="https://cdn.jsdelivr.net/npm/chart.js@3.7.0/dist/chart.min.js"></script>
       <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       <link rel="stylesheet" href="./style.css" />
-      <script defer src="/client/chart.js"></script>
       <title>Your Expenses</title>
    </head>
    <body>
@@ -18,34 +18,280 @@
          <nav class="nav-container">
             <h2 id="heading-el">Xpers</h2>
             <a id="next-link" class="your-expense-link" href="./index.html"
-               ><i id="prev-icon" class="fas fa-arrow-left"></i
-            > Add Expenses</a>
+               ><i id="prev-icon" class="fas fa-arrow-left"></i> Add Expenses</a
+            >
          </nav>
       </header>
-   
-      <section id="show-expense" class="show-expense-container">
-         
-      </section>
+
+      <section id="show-expense" class="show-expense-container"></section>
       <section class="graph-container container">
          <div class="graph-categories">
             <div>
-               <button class="categories-btn">Today</button>
+               <button onclick="dailyChart()" class="categories-btn">Daily</button>
             </div>
             <div>
-               <button class="categories-btn">This Week</button>
+               <button onclick="weeklyChart()" class="categories-btn">
+                  Weekly
+               </button>
             </div>
             <div>
-               <button class="categories-btn">This Month</button>
+               <button onclick="monthlyChart()" class="categories-btn">Monthly</button>
             </div>
             <div>
-               <button class="categories-btn">This Year</button>
+               <button onclick="yearlyChart()" class="categories-btn">Yearly</button>
             </div>
          </div>
       </section>
       <section id="graph" class="graph container">
-         <div class="graph-chart jumbotron">
-
+         <!-- <div class="graph-chart jumbotron">
+         </div> -->
+         <div id="chart-report" class="graph-chart">
+            <canvas id="chart" height="400" width="1000"></canvas>
          </div>
       </section>
+      <script>
+         const chartReport = document.getElementById('chart');
+         const ctx = document.getElementById('chart').getContext('2d');
+         const chart = new Chart(ctx, {
+            type: 'line',
+            data: {
+               labels: [],
+               datasets: [
+                  {
+                     label: 'Your Expenses',
+                     backgroundColor: 'rgba(75, 85, 99, 0.2)',
+                     borderColor: 'rgba(75, 85, 99, 1)',
+                     data: [0, 10, 5, 2, 20, 30, 45],
+                     fill: true,
+                     borderWidth: 2,
+                     tension: 0.2
+                  },
+               ],
+            },
+            
+            options: {
+               scales: {
+                  y: {
+                     beginAtZero: true,
+                     ticks: {
+                        callback: function(value, index, ticks) {
+                           return '₹' + value;
+                        }
+                     }
+                  },
+
+                  // x: {
+                  //    ticks: {
+                  //       callback: function(value, index, ticks) {
+                  //          return
+                  //       }
+                  //    }
+                  // }
+               },
+            },
+         });
+
+         chartIt();
+         async function chartIt() {
+            await getSumExpense();
+            const data = await getAllExpenses();
+            console.log(data)
+            chart.data.labels = data.xlabels;
+            chart.data.datasets[0].data = data.yexpenses;
+            chart.update();
+         }
+
+         async function weeklyChart() {
+            const weeklyData = await getWeeklyExpenses();
+            chart.data.labels = weeklyData.xlabels;
+            chart.data.datasets[0].data = weeklyData.yexpenses;
+            chart.update();
+         }
+
+         async function dailyChart() {
+            const dailyData = await getDailyExpenses();
+            chart.data.labels = dailyData.xlabels;
+            chart.data.datasets[0].data = dailyData.yexpenses;
+            chart.update();
+         }
+
+         async function monthlyChart() {
+            const monthlyData = await getMonthlyExpenses();
+            chart.data.labels = monthlyData.xlabels;
+            chart.data.datasets[0].data = monthlyData.yexpenses;
+            chart.update();
+         }
+
+         async function yearlyChart() {
+            const yearlyData = await getYearlyExpenses();
+            chart.data.labels = yearlyData.xlabels;
+            chart.data.datasets[0].data = yearlyData.yexpenses;
+            chart.update();
+         }
+
+
+         async function getAllExpenses() {
+            const xlabels = [];
+            const yexpenses = [];
+            const res = await fetch(
+               'http://localhost:5000/expenses/oldest-date'
+            );
+            const data = await res.json();
+            data.map(expense => {
+               let addedOn = new Date(expense.expense_date);
+               let moment = addedOn.toLocaleDateString('en-US', {
+                  month:"short",
+                  day:"numeric",
+                  // year:"numeric",
+                  hour:"2-digit",
+                  minute:"2-digit"
+               });
+               let expenseForEach = expense.expense_amount;
+               xlabels.push(moment);
+               yexpenses.push(expense.expense_amount);
+            });
+            return { xlabels, yexpenses };
+         }
+
+         async function getDailyExpenses() {
+            const xlabels = [];
+            const yexpenses = [];
+            const res = await fetch('http://localhost:5000/expenses/daily');
+            const data = await res.json();
+            console.log(data);
+            data.map(expense => {
+               let addedOn = new Date(expense.daily_expense);
+               let moment = addedOn.toLocaleDateString('en-US', {
+                  day: 'numeric',
+                  month: 'long',
+               });
+               xlabels.push(moment);
+               yexpenses.push(expense.sum_of_expenses);
+            });
+            return { xlabels, yexpenses };
+         }
+
+         async function getWeeklyExpenses() {
+            const xlabels = [];
+            const yexpenses = [];
+            const res = await fetch('http://localhost:5000/expenses/weekly');
+            const data = await res.json();
+            console.log(data);
+            data.map(expense => {
+               let addedOn = new Date(expense.weekly_expense);
+               let moment = addedOn.toLocaleDateString('en-US', {
+                  day: 'numeric',
+                  month: 'long',
+               });
+               xlabels.push(moment);
+               yexpenses.push(expense.sum_of_expenses);
+            });
+            return { xlabels, yexpenses };
+         }
+
+         async function getMonthlyExpenses() {
+            const xlabels = [];
+            const yexpenses = [];
+            const res = await fetch('http://localhost:5000/expenses/monthly');
+            const data = await res.json();
+            console.log(data);
+            data.map(expense => {
+               let addedOn = new Date(expense.monthly_expense);
+               let moment = addedOn.toLocaleDateString('en-US', {
+                  month: 'long'
+               });
+               xlabels.push(moment);
+               yexpenses.push(expense.sum_of_expenses);
+            });
+            return { xlabels, yexpenses };
+         }
+
+
+         async function getYearlyExpenses() {
+            const xlabels = [];
+            const yexpenses = [];
+            const res = await fetch('http://localhost:5000/expenses/yearly');
+            const data = await res.json();
+            console.log(data);
+            data.map(expense => {
+               let addedOn = new Date(expense.yearly_expense);
+               let moment = addedOn.toLocaleDateString('en-US', {
+                  year: "numeric"
+               });
+               xlabels.push(moment);
+               yexpenses.push(expense.sum_of_expenses);
+            });
+            return { xlabels, yexpenses };
+         }
+         const headingEl = document.getElementById('heading-el');
+         const showExpense = document.getElementById('show-expense');
+         const graph = document.getElementById('graph');
+
+         let expenseDets = [];
+
+         function home() {
+            window.location = '/client';
+         }
+
+         function calcSum(arr) {
+            let sum = 0;
+            for (let i = 0; i < arr.length; i++) {
+               sum += arr[i]['expense_amount'];
+            }
+            return sum;
+         }
+
+         function calcMaxMin(arr) {
+            let max = 0;
+            let min = Number.MAX_VALUE;
+            let minFor;
+            let maxFor;
+            for (let i = 0; i < arr.length; i++) {
+               if (arr[i]['expense_amount'] > max) {
+                  max = arr[i]['expense_amount'];
+                  maxFor = arr[i]['expense_desc'];
+               }
+               if (arr[i]['expense_amount'] < min) {
+                  min = arr[i]['expense_amount'];
+                  minFor = arr[i]['expense_desc'];
+               }
+            }
+            return [max, min, minFor, maxFor];
+         }
+
+         async function getSumExpense() {
+            const res = await fetch('http://localhost:5000/expenses');
+            const data = await res.json();
+            let sumOfExp = calcSum(data);
+            let [maxOfExp, minOfExp, minDesc, maxDesc] = calcMaxMin(data);
+            showExpense.innerHTML = `
+               <div id="image-container" class="image-container"><img class="wallet-image" src="./images/undraw_wallet_aym5.svg" alt=""></div>
+               <div class="show-expense-jumbotron">
+                  <div class="total-amount">
+                     <div>
+                        <p class="total-amount-text"><i class="fas fa-wallet"></i> Total Amount</p>
+                        <h1 class="total-amount-value">₹${sumOfExp}</h1>
+                     </div>
+                  </div>
+                  <div class="highest-lowest">
+                     <p>Highest Expense: <strong>₹${maxOfExp}</strong> for ${maxDesc}</p>
+                     <p>Lowest Expense: <strong>₹${minOfExp}</strong> for ${minDesc}</p>
+                  </div>
+                  <div>
+                     <button onclick="changeFocus()" class="view-details-btn">View Details</button>
+                  </div>
+               </div>
+               `;
+         }
+
+         function changeFocus() {
+            chartIt();
+            graph.scrollIntoView({ behavior: 'smooth', block: 'center' });
+         }
+
+         // document.addEventListener('DOMContentLoaded', getSumExpense);
+
+         headingEl.addEventListener('click', home);
+      </script>
    </body>
 </html>

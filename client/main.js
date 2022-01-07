@@ -10,21 +10,21 @@ const sortAmtDesc = document.getElementById('sort-amount-dsc');
 const sortDate = document.getElementById('sort-date-oldest');
 const sortDateNew = document.getElementById('sort-date-newest');
 
-
 let totalExpense;
 
 let allExpenses = [];
 
-
-
+// const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+// console.log(timezone); // Asia/Karachi
 
 expenseList.parentElement.classList.remove('expense-section');
 async function addExpenses(e) {
    e.preventDefault();
-   expenseList.scrollIntoView({behavior: "smooth", block: 'center'})
+   expenseList.scrollIntoView({ behavior: 'smooth', block: 'center' });
    let expenseVal = expenseDesc.value;
    let expenseAmountVal = Number(expenseAmount.value);
    let newExpenseDate = new Date().toISOString();
+   console.log(newExpenseDate)
    const data = {
       expense_desc: expenseVal,
       expense_amount: expenseAmountVal,
@@ -43,7 +43,6 @@ async function addExpenses(e) {
    }
    expenseDesc.value = '';
    expenseAmount.value = '';
-   expenseAmount.focus();
 }
 async function getAllExpenses() {
    const res = await fetch('http://localhost:5000/expenses');
@@ -71,15 +70,17 @@ function createExpenseList({
    });
 
    return `
-      <li class="expense-list-item flex">
-         <div class="mobile flex flex-col">
-            <p class="fw-500">${expense_desc}</p>
-            <small class="fs-200">${moment}</small>
+      <li class="expense-list-item">
+         <div class="expense-list-item-desc">
+            <div class="mobile flex flex-col">
+               <p class="fw-500">${expense_desc}</p>
+               <small class="fs-200">${moment}</small>
+            </div>
+            <span class="fw-500">
+                  ₹${expense_amount}
+            </span>
          </div>
          <div class="expense-list-item-amount">
-            <span class="fw-500">
-               ₹${expense_amount}
-            </span>
             <button onclick="editExpense(${expense_id})" type="button" class="edit-btn">
                <i class="far fa-edit"></i>
             </button>
@@ -93,7 +94,6 @@ function createExpenseList({
 
 async function editExpense(expenseSno) {
    // editModal.style.display = 'block';
-   console.log(expenseSno);
    try {
       const res = await fetch(`http://localhost:5000/expenses/${expenseSno}`);
       const expData = await res.json();
@@ -123,7 +123,7 @@ async function editExpense(expenseSno) {
                <input
                   placeholder="Update expense"
                   required
-                  value = ${expData.expense_desc}
+                  value = "${expData.expense_desc}"
                   type="text"
                   id="update-expense-description"
                />
@@ -143,7 +143,7 @@ async function editExpense(expenseSno) {
 }
 
 async function updateExpenses(expenseID) {
-   let newExpenseDate = new Date().toISOString();
+   // let newExpenseDate = new Date().toISOString();
    let expenseVal = document.getElementById('update-expense-description').value;
    let expenseAmountVal = Number(
       document.getElementById('update-expense-amount').value
@@ -151,7 +151,6 @@ async function updateExpenses(expenseID) {
    const data = {
       expense_desc: expenseVal,
       expense_amount: expenseAmountVal,
-      expense_date: newExpenseDate,
    };
 
    try {
@@ -162,7 +161,7 @@ async function updateExpenses(expenseID) {
          body: JSON.stringify(data),
       });
 
-      window.location = '/client'
+      window.location = '/client';
    } catch (error) {
       console.error(error.message);
    }
@@ -217,7 +216,7 @@ async function sortOldestDate() {
    renderExpenses(data);
 }
 
-async function sortAscAmt(){
+async function sortAscAmt() {
    const res = await fetch('http://localhost:5000/expenses/amount-asc');
    const data = await res.json();
    if (data.length != 0) {
@@ -244,8 +243,9 @@ async function sortNewDate() {
    renderExpenses(data);
 }
 
-sortDateNew.addEventListener('click', sortNewDate)
-sortDate.addEventListener('click', sortOldestDate)
-sortAmtAsc.addEventListener('click',sortAscAmt)
-sortAmtDesc.addEventListener('click', sortDscAmt)
+sortDateNew.addEventListener('click', sortNewDate);
+sortDate.addEventListener('click', sortOldestDate);
+sortAmtAsc.addEventListener('click', sortAscAmt);
+sortAmtDesc.addEventListener('click', sortDscAmt);
 form.addEventListener('submit', addExpenses);
+

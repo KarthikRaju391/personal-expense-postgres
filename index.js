@@ -2,6 +2,7 @@ const express = require('express');
 const app = express();
 const pool = require('./db');
 const cors = require('cors');
+const res = require('express/lib/response');
 
 // middleware
 app.use(cors());
@@ -13,7 +14,7 @@ app.use(express.json()); // allows us to access the req.body
 app.get('/expenses', async (req, res) => {
    try {
       const allExpenses = await pool.query(
-         'SELECT * FROM expense ORDER BY expense_id DESC'
+         'SELECT * FROM expense ORDER BY expense_date DESC'
       );
 
       res.json(allExpenses.rows);
@@ -65,7 +66,7 @@ app.get('/expenses/amount-dsc', async (req, res) => {
 app.get('/expenses/oldest-date', async (req, res) => {
    try {
       const allExpenses = await pool.query(
-         'SELECT * FROM expense ORDER BY expense_id ASC'
+         'SELECT * FROM expense ORDER BY expense_date ASC'
       );
 
       res.json(allExpenses.rows);
@@ -74,6 +75,60 @@ app.get('/expenses/oldest-date', async (req, res) => {
    }
 });
 
+// get expenses grouped by day
+app.get('/expenses/daily', async (req, res) => {
+   try {
+      const weeklyExpenses = await pool.query(
+         "SELECT DATE_TRUNC('day', expense_date) AS daily_expense, SUM(expense_amount) AS sum_of_expenses FROM expense GROUP BY DATE_TRUNC('day', expense_date) ORDER BY DATE_TRUNC('day', expense_date) ASC;"
+      );
+
+      res.json(weeklyExpenses.rows);
+   } catch (err) {
+      console.error(err.message)
+   }
+});
+
+
+
+// get expenses grouped by week 
+app.get('/expenses/weekly', async (req, res) => {
+   try {
+      const weeklyExpenses = await pool.query(
+         "SELECT DATE_TRUNC('week', expense_date) AS weekly_expense, SUM(expense_amount) AS sum_of_expenses FROM expense GROUP BY DATE_TRUNC('week', expense_date) ORDER BY DATE_TRUNC('week', expense_date) ASC;"
+      );
+
+      res.json(weeklyExpenses.rows);
+   } catch (err) {
+      console.error(err.message)
+   }
+});
+
+// get expenses grouped by month
+app.get('/expenses/monthly', async (req, res) => {
+   try {
+      const weeklyExpenses = await pool.query(
+         "SELECT DATE_TRUNC('month', expense_date) AS monthly_expense, SUM(expense_amount) AS sum_of_expenses FROM expense GROUP BY DATE_TRUNC('month', expense_date) ORDER BY DATE_TRUNC('month', expense_date) ASC;"
+      );
+
+      res.json(weeklyExpenses.rows);
+   } catch (err) {
+      console.error(err.message)
+   }
+});
+
+
+// get expenses grouped by year
+app.get('/expenses/yearly', async (req, res) => {
+   try {
+      const weeklyExpenses = await pool.query(
+         "SELECT DATE_TRUNC('year', expense_date) AS yearly_expense, SUM(expense_amount) AS sum_of_expenses FROM expense GROUP BY DATE_TRUNC('year', expense_date) ORDER BY DATE_TRUNC('year', expense_date) ASC;"
+      );
+
+      res.json(weeklyExpenses.rows);
+   } catch (err) {
+      console.error(err.message)
+   }
+});
 
 // get an expense
 
@@ -109,11 +164,11 @@ app.post('/expenses', async (req, res) => {
 app.patch('/expenses/:id', async (req, res) => {
    try {
       const { id } = req.params;
-      const { expense_desc, expense_amount, expense_date } = req.body;
+      const { expense_desc, expense_amount} = req.body;
 
       const updateExpenses = await pool.query(
-         'UPDATE expense SET expense_desc = $1, expense_amount = $2, expense_date = $3 WHERE expense_id = $4',
-         [expense_desc, expense_amount, expense_date, id]
+         'UPDATE expense SET expense_desc = $1, expense_amount = $2 WHERE expense_id = $3',
+         [expense_desc, expense_amount, id]
       );
 
       res.json('Expense was updated');
